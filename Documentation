@@ -1,0 +1,509 @@
+# XR Portfolio & Face Tracking Project
+
+A Microsoft Learn Student Ambassador (MLSA) Project Wing Collaborative  focusing on Extended Reality (XR) technologies. This project combines Web AR portfolio creation and facial tracking capabilities.
+
+## 🎯 Project Overview
+
+This project consists of two main components:
+
+1. **Web AR Portfolio**: An interactive portfolio system using Unity and Needle Engine that allows users to create immersive AR portfolios and business cards.
+
+2. **AR Face Tracker**: A facial recognition and tracking system built with Unity AR Foundation.
+
+## 🚀 Prerequisites
+
+Before you begin, ensure you have:
+- Unity 2022.3 LTS or newer installed
+- Basic knowledge of C# programming
+- A modern web browser that supports WebXR
+- Git installed on your computer
+- Node.js and npm installed (required for Needle Engine)
+
+## 📦 Installation & Setup
+
+# Part 1: Web AR Portfolio Implementation Guide
+
+## Understanding Web AR Portfolio Deployment
+
+Unity with Needle Engine allows us to create and deploy Web AR experiences directly to Glitch, a web hosting platform that's particularly well-suited for WebXR projects. This direct deployment approach simplifies the development process by eliminating the need for local server setup.
+
+## Implementation Steps
+
+### 1. Initial Setup
+
+First, let's prepare your development environment:
+
+1. **Unity Installation**
+   - Download and install Unity Hub from [Unity](unity.com/download)
+   - Install Unity 2022.3 LTS or newer through Unity Hub
+   - During installation, ensure you select:
+ 	- WebGL Build Support
+ 	- Visual Studio/VS Code (or your preferred IDE)
+ 	- Windows Build Support (even if you're on Mac/Linux)
+
+2. **Required Accounts**
+   - Create a Glitch account at glitch.com
+   - Link your GitHub account (optional but recommended for backup)
+
+### 2. Unity Project Configuration
+
+Create and configure your Unity project properly:
+
+1. **Create New Project**
+```
+In Unity Hub:
+1. Click "New Project"
+2. Select "Universal 3D Core"
+3. Name your project
+4. Choose Unity 2022.3 LTS or newer.
+5. Click "Create project"
+```
+
+2. **Install Needle Engine**
+   - Download this Needle Package [Needle Unity Package](https://drive.google.com/file/d/1GsdRjPmgmQRY_Rp9_erFVmd4VklaDtoW/view?usp=sharing)
+```
+In Unity:
+1. Left Click on Project Tab
+2. Import New Package → Custom Package
+3. Select downloaded Needle Unity Package.
+4. Import the package.
+```
+
+3. **Configure Project Settings**
+```
+Edit → Project Settings:
+
+1. Player Settings:
+   - WebGL Tab:
+ 	• Resolution: Recommended (1200x800)
+ 	• Enable WebGL 2.0
+ 	• Template: Needle Engine
+
+2. Quality Settings:
+   - Set to "Medium" for better performance
+   - Disable anti-aliasing
+   
+3. XR Plug-in Management:
+   - Install if not present
+   - Enable WebXR support
+```
+
+### 3. Setting Up Needle Export
+
+Configure Needle Engine for direct Glitch deployment:
+
+1. **Add Needle Components**
+```
+In your Unity scene:
+1. Create an empty GameObject
+2. Name it "NeedleEngine"
+3. Add Component → Needle → Needle Engine (Project & Export)
+4. In the inspector, configure:
+   - Project Folder: [Your project name]
+   - Enable Auto Export
+   - Enable Auto Compress
+   - Template: Vite (default)
+5. Click "Generate Project"
+```
+
+2. **Configure Glitch Deployment**
+```
+On the same GameObject:
+1. Add Component → Needle → Deploy to Glitch
+2. Sign in to your Glitch account when prompted
+3. Choose to create a new project or select existing
+```
+
+### 4. Creating AR Content
+
+Set up your AR portfolio elements:
+
+1. **Scene Hierarchy Setup**
+```
+Portfolio (Scene)
+├── NeedleEngine
+│   ├── Needle Engine (Script)
+│   └── Deploy to Glitch (Script)
+├── AR Session Origin
+│   ├── AR Camera
+│   └── Image Tracking Manager
+├── Portfolio Content
+└── UI Canvas
+```
+
+2. **Add Image Targets**
+```csharp
+// ImageTrackerSetup.cs
+using Needle.Engine;
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+
+public class ImageTrackerSetup : MonoBehaviour
+{
+	[SerializeField]
+	private ARTrackedImageManager imageManager;
+    
+	void Start()
+	{
+    	// Set up your image targets here
+    	// Needle handles the WebXR implementation automatically
+	}
+}
+```
+
+### 5. Testing and Deployment
+
+The testing and deployment process is streamlined with Glitch:
+
+1. **Direct Testing**
+   - Click the "Deploy to Glitch" button in Unity
+   - Wait for the upload to complete
+   - Open the provided Glitch URL
+   - Your project is now live and testable
+
+2. **Making Updates**
+   - Make changes in Unity
+   - Needle auto-exports when you save
+   - Click "Deploy to Glitch" again
+   - Changes are live immediately
+
+### 6. Performance Optimization
+
+Key considerations for web-based AR:
+
+1. **Asset Optimization**
+```
+- Use compressed textures (Unity's default compression)
+- Keep models under 100k triangles when possible
+- Use maximum texture size of 2048x2048
+- Enable texture compression in Unity
+```
+
+2. **Runtime Settings**
+```csharp
+// Performance settings in your main AR controller
+public class ARPortfolioManager : MonoBehaviour
+{
+	[SerializeField] private int maxTrackedImages = 2;
+	[SerializeField] private bool enableLowMemoryMode = true;
+    
+	void Start()
+	{
+    	// Needle handles most optimizations automatically
+    	// Focus on content optimization
+	}
+}
+```
+
+### 7. Common Issues and Solutions
+
+1. **Deployment Problems**
+   - Check your Glitch account connection
+   - Verify your project has adequate resources
+   - Clear Unity cache if export fails
+   - Check Unity console for Needle errors
+
+2. **AR Tracking Issues**
+   - Use high-contrast image targets
+   - Ensure adequate lighting
+   - Keep image targets between 10-20cm in size
+   - Test tracking distance limits
+
+3. **Performance Checklist**
+   - Monitor frame rate in browser dev tools
+   - Check memory usage on mobile devices
+   - Verify asset loading times
+   - Test progressive loading behavior
+
+# Face Recognition System Implementation Guide
+
+## Understanding the System
+
+The face recognition system we're building will capture faces through the device camera, detect them using AR Foundation, and match them against a pre-existing database to retrieve information like name and age. Think of it as a digital attendance system or identity verification tool.
+
+## Implementation Steps
+
+### 1. Basic Project Setup
+
+First, let's configure Unity for mobile AR development:
+
+```csharp
+// Required Unity Packages:
+// - AR Foundation
+// - ARCore XR Plugin (Android)
+// - ARKit XR Plugin (iOS)
+// - SQLite for Unity (or your preferred database solution)
+```
+
+### 2. Database Structure
+
+Let's create a simple database to store face data:
+
+```csharp
+public class PersonData
+{
+	public int Id { get; set; }
+	public string Name { get; set; }
+	public int Age { get; set; }
+	public byte[] FaceData { get; set; }  // Stored face recognition data
+	public DateTime LastUpdated { get; set; }
+}
+
+public class DatabaseManager : MonoBehaviour
+{
+	private SQLiteConnection connection;
+    
+	private void Start()
+	{
+    	InitializeDatabase();
+	}
+
+	private void InitializeDatabase()
+	{
+    	// Create or connect to SQLite database
+    	string dbPath = Path.Combine(Application.persistentDataPath, "FaceDatabase.db");
+    	connection = new SQLiteConnection(dbPath);
+   	 
+    	// Create tables if they don't exist
+    	connection.CreateTable<PersonData>();
+	}
+
+	public PersonData FindPerson(byte[] faceData)
+	{
+    	// Compare input face data with database entries
+    	// Return matching person data if found
+    	return connection.Table<PersonData>()
+        	.Where(p => CompareFaceData(p.FaceData, faceData))
+        	.FirstOrDefault();
+	}
+
+	private bool CompareFaceData(byte[] stored, byte[] current)
+	{
+    	// Implement face matching logic here
+    	// Return true if faces match within acceptable threshold
+    	// This would use your chosen face recognition library
+    	return false; // Placeholder
+	}
+}
+```
+
+### 3. Face Detection Implementation
+
+```csharp
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
+using System.Collections.Generic;
+
+public class FaceDetectionManager : MonoBehaviour
+{
+	[SerializeField] private ARFaceManager faceManager;
+	[SerializeField] private DatabaseManager databaseManager;
+    
+	// UI elements to display person info
+	[SerializeField] private GameObject infoPanel;
+	[SerializeField] private TMPro.TextMeshProUGUI nameText;
+	[SerializeField] private TMPro.TextMeshProUGUI ageText;
+    
+	private Dictionary<TrackableId, bool> processedFaces =
+    	new Dictionary<TrackableId, bool>();
+
+	private void Awake()
+	{
+    	if (faceManager == null)
+        	faceManager = GetComponent<ARFaceManager>();
+       	 
+    	if (databaseManager == null)
+        	databaseManager = FindObjectOfType<DatabaseManager>();
+	}
+
+	private void OnEnable()
+	{
+    	faceManager.facesChanged += OnFacesChanged;
+	}
+
+	private void OnDisable()
+	{
+    	faceManager.facesChanged -= OnFacesChanged;
+	}
+
+	private void OnFacesChanged(ARFacesChangedEventArgs args)
+	{
+    	// Process newly detected faces
+    	foreach (var face in args.added)
+    	{
+        	ProcessFace(face);
+    	}
+
+    	// Update tracking for existing faces
+    	foreach (var face in args.updated)
+    	{
+        	// Only process faces we haven't identified yet
+        	if (!processedFaces.ContainsKey(face.trackableId) ||
+            	!processedFaces[face.trackableId])
+        	{
+            	ProcessFace(face);
+        	}
+    	}
+
+    	// Clean up removed faces
+    	foreach (var face in args.removed)
+    	{
+        	if (processedFaces.ContainsKey(face.trackableId))
+            	processedFaces.Remove(face.trackableId);
+       	 
+        	HidePersonInfo();
+    	}
+	}
+
+	private void ProcessFace(ARFace face)
+	{
+    	StartCoroutine(ProcessFaceCoroutine(face));
+	}
+
+	private IEnumerator ProcessFaceCoroutine(ARFace face)
+	{
+    	// Wait for a few frames to ensure good face capture
+    	yield return new WaitForSeconds(0.5f);
+
+    	// Get face data from the AR mesh
+    	byte[] faceData = ExtractFaceData(face);
+   	 
+    	// Query database for matching face
+    	PersonData person = databaseManager.FindPerson(faceData);
+   	 
+    	if (person != null)
+    	{
+        	DisplayPersonInfo(person);
+        	processedFaces[face.trackableId] = true;
+    	}
+    	else
+    	{
+        	HidePersonInfo();
+        	processedFaces[face.trackableId] = false;
+    	}
+	}
+
+	private byte[] ExtractFaceData(ARFace face)
+	{
+    	// Extract relevant face data for matching
+    	// This implementation depends on your chosen face recognition method
+    	// Could use mesh vertices, texture, or other identifying features
+   	 
+    	return null; // Placeholder
+	}
+
+	private void DisplayPersonInfo(PersonData person)
+	{
+    	infoPanel.SetActive(true);
+    	nameText.text = $"Name: {person.Name}";
+    	ageText.text = $"Age: {person.Age}";
+	}
+
+	private void HidePersonInfo()
+	{
+    	infoPanel.SetActive(false);
+	}
+}
+```
+
+### 4. Camera Configuration
+
+```csharp
+public class CameraConfig : MonoBehaviour
+{
+	[SerializeField] private ARCameraManager cameraManager;
+
+	private void Start()
+	{
+    	// Request highest quality appropriate for face detection
+    	ConfigureCamera();
+	}
+
+	private void ConfigureCamera()
+	{
+    	if (cameraManager != null)
+    	{
+        	// Configure camera for optimal face detection
+        	cameraManager.requestedFacingDirection = CameraFacingDirection.User;
+       	 
+        	// Get the best resolution that won't impact performance
+        	Resolution[] resolutions = cameraManager.GetConfigurations();
+        	if (resolutions.Length > 0)
+        	{
+            	// Select appropriate resolution
+            	// Balance between quality and performance
+        	}
+    	}
+	}
+}
+```
+
+### 5. Building for Mobile
+
+For Android:
+```
+1. Player Settings adjustments:
+   - Minimum API Level: 24
+   - Target API Level: Latest
+   - Required permissions:
+ 	* Camera
+ 	* Internet (if using online database)
+ 	* Write External Storage (for local database)
+```
+
+For iOS:
+```
+1. Player Settings requirements:
+   - Minimum iOS Version: 11.0
+   - Camera Usage Description
+   - Required frameworks:
+ 	* ARKit
+ 	* CoreML (if using for face recognition)
+```
+
+### 6. Performance Optimization
+
+To ensure smooth performance on mobile devices:
+
+```csharp
+public class PerformanceOptimizer : MonoBehaviour
+{
+	[SerializeField] private int targetFrameRate = 30;
+	[SerializeField] private float detectionInterval = 0.5f;
+    
+	private void Start()
+	{
+    	// Set target frame rate
+    	Application.targetFrameRate = targetFrameRate;
+   	 
+    	// Keep screen active
+    	Screen.sleepTimeout = SleepTimeout.NeverSleep;
+	}
+}
+```
+
+### 7. Testing Considerations
+
+Create a testing protocol:
+
+1. Database Testing:
+   - Test with various lighting conditions
+   - Test with different face angles
+   - Verify database matching speed
+   - Check false positive/negative rates
+
+2. Performance Testing:
+   - Monitor memory usage
+   - Track frame rate during detection
+   - Measure battery consumption
+   - Test with various database sizes
+
+3. Edge Cases:
+   - Multiple faces in frame
+   - Poor lighting conditions
+   - Partial face visibility
+   - Device movement during detection
+
+The system is designed to be expandable - you can easily add more fields to the database or implement different face recognition algorithms based on your specific needs.
+
