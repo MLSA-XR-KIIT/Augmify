@@ -6,7 +6,7 @@ A Microsoft Learn Student Ambassador (MLSA) Project Wing Collaborative  focusing
 
 This project consists of two main components:
 
-1. **Web AR Portfolio**: An interactive portfolio system using Unity and Needle Engine that allows users to create immersive AR portfolios and business cards.
+1. **AR Portfolio**: An interactive portfolio system using Unity that allows users to create immersive AR portfolios and business cards.
 
 2. **AR Face Tracker**: A facial recognition and tracking system built with Unity AR Foundation.
 
@@ -15,24 +15,16 @@ This project consists of two main components:
 Before you begin, ensure you have:
 - Unity 2022.3 LTS or newer installed
 - Basic knowledge of C# programming
-- A modern web browser that supports WebXR
 - Git installed on your computer
-- Node.js and npm installed (required for Needle Engine)
 
-# Part 1: Web AR Portfolio Implementation Guide
+# Part 1: AR Portfolio Implementation Guide
 
-## Understanding Web AR Portfolio Deployment
-
-Unity with Needle Engine allows us to create and deploy Web AR experiences directly to Glitch, a web hosting platform that's particularly well-suited for WebXR projects. This direct deployment approach simplifies the development process by eliminating the need for local server setup.
 ## 🛠️ Technical Stack
 
 - **Game Engine**: Unity 2022.3+
 - **AR Framework**: AR Foundation
-- **Web Technology**: Needle Engine, WebGL
 - **Programming**: C#, JavaScript
 - **Version Control**: Git
-- **Hosting**: GitHub Pages
-- **Package Management**: npm
 
 # Face Recognition System Implementation Guide
 
@@ -182,7 +174,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions or feedback:
 - Create an issue in this repository
-- Contact the MLSA Project team through GitHub
+- Contact the MLSA Project team
 
 ## ⚠️ Troubleshooting
 
