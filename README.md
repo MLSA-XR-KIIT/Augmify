@@ -186,7 +186,6 @@ Common issues and solutions:
 ## 🙏 Acknowledgments
 
 - Unity Technologies
-- Needle Tools team
 
 ---
 **Note**: This project is under active development. Features and requirements may change.
