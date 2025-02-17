@@ -90,8 +90,8 @@ augmify/
 | Name | Role | Contact |
 |------|------|---------|
 | [Uday Narayan Chakraborty] | Domain Lead | [2205342@kiit.ac.in] |
-| [G. K. Prudhvi Raj] | Project Lead | [Email/GitHub] |
-| [Archi Kanungo] | Project Co-Lead | [Email/GitHub] |
+| [G. K. Prudhvi Raj] | Project Lead | [2330159@kiit.ac.in] |
+| [Archi Kanungo] | Project Co-Lead | [2305605@kiit.ac.in] |
 | [Aditya Vishwakarma] | 3D Artist | [22051999@kiit.ac.in] |
 
 ## License
