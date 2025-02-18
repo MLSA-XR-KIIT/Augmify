@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "packages": {
+    "com.ptc.vuforia.engine": {
+      "tarball": {
+        "hash": "8fe6c138d567",
+        "mtime": 1739901979314,
+        "size": 139050326,
+        "localPath": "C:\\Users\\KIIT0001\\Starbucks\\Packages\\com.ptc.vuforia.engine-10.29.6.tgz"
+      }
+    }
+  }
+}
