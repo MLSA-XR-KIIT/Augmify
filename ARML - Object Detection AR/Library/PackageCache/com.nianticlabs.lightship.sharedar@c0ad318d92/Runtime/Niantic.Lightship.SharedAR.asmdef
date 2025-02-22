@@ -1,0 +1,20 @@
+{
+    "name": "Niantic.Lightship.SharedAR",
+    "rootNamespace": "Niantic.Lightship.SharedAR",
+    "references": [
+        "Niantic.Lightship.AR",
+        "Unity.XR.ARFoundation",
+        "Unity.XR.ARSubsystems",
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.Components"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
